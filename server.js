@@ -101,3 +101,6 @@ app.delete('/delete-form/:uid', async (req, res) => {
 
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// get the .env file
+process.env
