@@ -5,9 +5,10 @@ const cors = require('cors');
 const app = express();
 require('dotenv').config();
 app.use(express.json({limit : 52428800}))
-app.use(cors({
-  origin: ["http://localhost:3000", "https://Evidentify.onrender.com"]
-}));
+app.use(cors());
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
 
 const PORT = process.env.PORT;
 const url = process.env.Database_URL;
@@ -98,6 +99,9 @@ app.delete('/delete-form/:uid', async (req, res) => {
 });
 
 
-
+// The "catchall" handler: for any request that doesn't match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'build', 'index.html'));
+});
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
