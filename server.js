@@ -3,10 +3,14 @@ const mongoose = require('mongoose');
 const Form = require('./models/Form');
 const cors = require('cors');
 const app = express();
+require('dotenv').config();
 app.use(express.json({limit : 52428800}))
 app.use(cors({
   origin: ["http://localhost:3000", "https://Evidentify.onrender.com"]
 }));
+
+const PORT = process.env.PORT;
+const url = process.env.Database_URL;
 
 const bodyParser = require('body-parser');
 
@@ -14,7 +18,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 
-mongoose.connect('mongodb+srv://nitmaman:X0nN63CD3z8HTFNy@cluster0.4lgymya.mongodb.net/', {
+mongoose.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => console.log('MongoDB Connected'));
@@ -95,5 +99,5 @@ app.delete('/delete-form/:uid', async (req, res) => {
 
 
 
-const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
