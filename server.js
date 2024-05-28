@@ -14,6 +14,10 @@ const url = process.env.Database_URL;
 
 const bodyParser = require('body-parser');
 
+dotenv,config({
+  path: 'config.env'
+});
+
 // Increase the limit to, for example, 50mb
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
